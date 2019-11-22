@@ -6,7 +6,7 @@
 /*   By: pde-bakk <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/11/18 13:52:42 by pde-bakk      #+#    #+#                 */
-/*   Updated: 2019/11/22 13:26:07 by pde-bakk      ########   odam.nl         */
+/*   Updated: 2019/11/22 21:16:13 by pde-bakk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,14 +37,17 @@ void	*ft_calloc(size_t count, size_t size)
 char	*ft_strdup(const char *s1, int n, int startpos)
 {
 	char	*dup;
-	size_t	i;
-	size_t	len;
+	int	i;
+	int	len;
 
 	i = 0;
 	if (n == 0)
 		return (ft_calloc(0, 0));
-	len = n;
-	dup = (char*)malloc(len);
+	if (n == -1)
+		len = ft_strlen(s1);
+	else
+		len = n;
+	dup = (char*)ft_calloc(len + 1, sizeof(char));
 	if (dup == NULL)
 		return (NULL);
 	while (i < len)
@@ -60,6 +63,8 @@ size_t	ft_strlen(const char *s)
 	size_t i;
 
 	i = 0;
+	if (!s)
+		return (0);
 	if (s[0] == 0)
 		return (0);
 	while (s[i])
@@ -67,28 +72,30 @@ size_t	ft_strlen(const char *s)
 	return (i);
 }
 
-char	*ft_strjoin(char const *s1, char const *s2)
+char	*ft_strjoiner(char *str, char *buf, int ret)
 {
 	int		i;
 	int		n;
 	char	*join;
 
+	if (buf && buf[0] == 0)
+		return (ft_calloc(0, 0));
 	i = 0;
 	n = 0;
-	join = (char*)malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
+	join = (char*)ft_calloc(ft_strlen(str) + ret + 1, sizeof(char));
 	if (join == NULL)
 		return (NULL);
-	while (s1 && s1[i])
+	while (str && str[i])
 	{
-		join[i] = s1[i];
+		join[i] = str[i];
 		i++;
 	}
-	while (s2 && s2[n])
+	if (str)
+		free(str);
+	while (buf && buf[n])
 	{
-		join[i] = s2[n];
-		i++;
+		join[i + n] = buf[n];
 		n++;
 	}
-	join[i] = '\0';
 	return (join);
 }

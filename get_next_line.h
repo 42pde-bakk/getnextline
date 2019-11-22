@@ -6,7 +6,7 @@
 /*   By: pde-bakk <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/11/17 12:21:37 by pde-bakk      #+#    #+#                 */
-/*   Updated: 2019/11/21 18:44:41 by pde-bakk      ########   odam.nl         */
+/*   Updated: 2019/11/22 16:08:09 by pde-bakk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ typedef struct		s_list
 
 char	*ft_strdup(const char *s1, int n, int startpos);
 void	*ft_calloc(size_t count, size_t size);
-char	*ft_strjoin(char const *s1, char const *s2);
+char	*ft_strjoiner(char *s1, char *s2, int ret);
 size_t	ft_strlen(const char *s);
 int		get_next_line(int fd, char **line);
 
