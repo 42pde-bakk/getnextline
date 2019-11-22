@@ -5,72 +5,65 @@
 /*                                                     +:+                    */
 /*   By: pde-bakk <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2019/11/21 11:50:20 by pde-bakk      #+#    #+#                 */
-/*   Updated: 2019/11/21 22:33:51 by pde-bakk      ########   odam.nl         */
+/*   Created: 2019/11/22 12:37:45 by pde-bakk      #+#    #+#                 */
+/*   Updated: 2019/11/22 14:25:07 by pde-bakk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-int	ft_newlinecheck(char *str)
+int		ft_newlinecheck(char *str)
 {
 	int	i;
 
 	i = 0;
-	if (str == NULL || str[i] == 0)
-		return (0);
 	while (str[i])
 	{
 		if (str[i] == '\n')
-				return (i);
+		{
+//			printf("newline found\n");
+			return (i);
+		}
 		i++;
+		if (str[i] == 0)
+			return (i);
 	}
+//	printf("newline not found\n");
 	return (-1);
 }
 
-char	*ft_setstring(int ret, char *buf, char *line)
+char	*ft_stringsetter(char *str, int ret, char *buf)
 {
 	size_t	i;
-	size_t	n;
-	char	*tmp;
 	size_t	len;
+	size_t	n;
+	char	*result;
 
+	len = 0;
 	i = 0;
 	n = 0;
-	tmp = NULL;
-	len = 0;
-	if (buf[i] == 0)
-		return (ft_strdup("", 0, 0));
-	if (line && line[i] != 0)
-		len = ft_strlen(line);
-	if (line)
-		tmp = ft_strdup(line, 0, 0);
-	line = (char*)ft_calloc(ret + len + 1, sizeof(char));
-	while (tmp && ft_strlen(tmp) > 0 && tmp[i])
+	if (buf[0] == 0)
+		return (ft_calloc(0, 0));
+	if (str && str[i] != 0)
+		len = ft_strlen(str);
+	result = (char*)ft_calloc(ret + len + 1, sizeof(char));
+	if (result == NULL)
+		return (NULL);
+	while (str && str[i])
 	{
-		line[i] = tmp[i];
+		result[i] = str[i];
 		i++;
 	}
+//	printf("result=%s&&&&\n", str);
 	while (buf && buf[n])
 	{
-		line[i + n] = buf[n];
+		result[i + n] = buf[n];
 		n++;
 	}
-//	line = ft_strjoin(tmp, buf);
-	return (line);
-}
-
-char	*ft_liner(char *str)
-{
-	size_t	i;
-	size_t	len;
-	char	*line;
-
-	i = 0;
-	len = ft_newlinecheck(str);
-	printf("len=%zu\n", len);
-	line = ft_strdup(str, len, 0);
-	return (line);
+//	printf("testprintf\n");
+//	if (str)
+//		free(str);
+	return (result);
 }
 
 char	*ft_bufferfixer(char *buf)
@@ -80,6 +73,7 @@ char	*ft_bufferfixer(char *buf)
 
 	i = 0;
 	len = ft_newlinecheck(buf) + 1;
+//	printf("len+1%cLEN+1", buf[len]);
 	while (buf[i] && buf[len + i])
 	{
 		buf[i] = buf[len + i];
@@ -90,7 +84,7 @@ char	*ft_bufferfixer(char *buf)
 		buf[i] = 0;
 		i++;
 	}
-//	printf("ENDRESULT=%s\n", buf);
+//	printf("gefixte buffer=%s$$\n", buf);
 	return (buf);
 }
 
@@ -101,28 +95,31 @@ int		get_next_line(int fd, char **line)
 	size_t		ret;
 
 	ret = 1;
-	str = NULL;
+// str = NULL;
+	str = ft_calloc(0, 0);
 	if (buf[0] != 0)
 	{
+//		printf("%s\n", buf);
 		ret = ft_strlen(buf);
-		ft_bufferfixer(buf);
-		printf("fixedbuffer=%s\n", buf);
 	}
+	if (ret == 0 && buf[0] == 0)
+		return (0);
 	while (ret > 0)
-	{	
-		printf("Ret=%zu\nBuf=%s\n%sStr=s\n", ret, buf, str);
-		str = ft_setstring(ret, buf, str);
-//		printf("AFTERRRRR Ret=%zu\nBuf=%s\n%sStr=s\n", ret, buf, str);
+	{
+//		printf("buf==%s$$$$$$$$$\n", buf);
+		str = ft_stringsetter(str, ret, buf);
 		if (ft_newlinecheck(str) != -1)
 		{
-			*line = ft_liner(str);
-			free(str);
-//			printf("nextbuffer=%s\n", buf);
+//			printf("\t\t\t\t\t\t\t\t\t\t%i\n", ft_newlinecheck(str));
+			*line = ft_strdup(str, ft_newlinecheck(str), 0);
+//			printf("WAGWAAN%s\n", *line);
+			ft_bufferfixer(buf);
 			return (1);
 		}
 		ret = read(fd, buf, BUFFER_SIZE);
 	}
-	free(str);
+	if (buf[0] == 0 && ret == 0)
+		return (0);
 	return (0);
 }
 
@@ -134,10 +131,11 @@ int		main(void)
 
 	i = 1;
 	fd = open("42", O_RDONLY);
-	while (i < 5)
+	while (i < 15)
 	{
 		get_next_line(fd, &line);
 		printf("%s\n", line);
+//		printf("!@#$^&*()_+\n");
 		i++;
 	}
 	return (0);
