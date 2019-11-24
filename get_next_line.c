@@ -6,7 +6,7 @@
 /*   By: pde-bakk <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/11/22 15:02:02 by pde-bakk      #+#    #+#                 */
-/*   Updated: 2019/11/22 21:29:20 by pde-bakk      ########   odam.nl         */
+/*   Updated: 2019/11/24 17:21:30 by pde-bakk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,13 @@ int		ft_newlinecheck(char *str, int k)
 	return (-1);
 }
 
+void	ft_spacemaker(char **s)
+{
+	if (*s)
+		free(*s);
+	*s = NULL;
+}
+
 char	*ft_bufferfixer(char *buf)
 {
 	int i;
@@ -53,7 +60,7 @@ char	*ft_bufferfixer(char *buf)
 	return (buf);
 }
 
-char	*ft_the_finisher(char *str, char *buf, char *line, int ret)
+int		ft_the_finisher(char *str, char *buf, char **line, int ret)
 {
 	int		i;
 
@@ -64,13 +71,20 @@ char	*ft_the_finisher(char *str, char *buf, char *line, int ret)
 			break ;
 		i++;
 	}
-	line = ft_strdup(str, i, 0);
-	free(str);
+	*line = ft_strdup(str, i, 0);
+	if (str)
+		free(str);
 	if (ret == 0 && buf)
+	{
 		free(buf);
+		buf = NULL;
+		return (0);
+	}
 	else
+	{
 		ft_bufferfixer(buf);
-	return (line);
+		return (1);
+	}
 }
 
 int		get_next_line(int fd, char **line)
@@ -87,38 +101,14 @@ int		get_next_line(int fd, char **line)
 	{
 		str = ft_strjoiner(str, buf, ret);
 		if (ft_newlinecheck(str, 0) > -1)
-		{
-			*line = ft_the_finisher(str, buf, *line, ret);
-			return (1);
-		}
+			return (ft_the_finisher(str, buf, line, ret));
 		free(buf);
 		buf = ft_calloc(BUFFER_SIZE + 1, sizeof(char));
 		ret = read(fd, buf, BUFFER_SIZE);
 		if (ret == -1)
 			return (ret);
 	}
-	if (ret == 0) //&& ft_strlen(str) > 0)
-		*line = ft_the_finisher(str, buf, *line, ret);
-	return (0);
-}
-
-int	main(void)
-{
-	char	*line;
-	int		fd;
-	int		i;
-
-
-	line = NULL;
-	i = 1;
-	fd = open("42", O_RDONLY);
-	while (i)
-	{
-		i = get_next_line(fd, &line);
-		printf("%d-%s\n", i, line);
-		free(line);
-	}
-	while (1)
-	{}
+	if (ret == 0)
+		return (ft_the_finisher(str, buf, line, ret));
 	return (0);
 }

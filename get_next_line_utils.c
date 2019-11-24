@@ -6,7 +6,7 @@
 /*   By: pde-bakk <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/11/18 13:52:42 by pde-bakk      #+#    #+#                 */
-/*   Updated: 2019/11/22 21:16:13 by pde-bakk      ########   odam.nl         */
+/*   Updated: 2019/11/24 17:45:30 by pde-bakk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,8 @@ void	*ft_calloc(size_t count, size_t size)
 char	*ft_strdup(const char *s1, int n, int startpos)
 {
 	char	*dup;
-	int	i;
-	int	len;
+	int		i;
+	int		len;
 
 	i = 0;
 	if (n == 0)
@@ -78,13 +78,14 @@ char	*ft_strjoiner(char *str, char *buf, int ret)
 	int		n;
 	char	*join;
 
-	if (buf && buf[0] == 0)
-		return (ft_calloc(0, 0));
 	i = 0;
 	n = 0;
 	join = (char*)ft_calloc(ft_strlen(str) + ret + 1, sizeof(char));
 	if (join == NULL)
+	{
+		free(str);
 		return (NULL);
+	}
 	while (str && str[i])
 	{
 		join[i] = str[i];
