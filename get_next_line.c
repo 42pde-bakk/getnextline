@@ -5,8 +5,8 @@
 /*                                                     +:+                    */
 /*   By: pde-bakk <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2019/11/22 15:02:02 by pde-bakk      #+#    #+#                 */
-/*   Updated: 2019/11/24 17:21:30 by pde-bakk      ########   odam.nl         */
+/*   Created: 2019/11/22 15:02:02 by pde-bakk       #+#    #+#                */
+/*   Updated: 2019/11/25 14:10:57 by pde-bakk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,6 @@ int		ft_newlinecheck(char *str, int k)
 		return (i);
 	}
 	return (-1);
-}
-
-void	ft_spacemaker(char **s)
-{
-	if (*s)
-		free(*s);
-	*s = NULL;
 }
 
 char	*ft_bufferfixer(char *buf)
@@ -95,6 +88,8 @@ int		get_next_line(int fd, char **line)
 
 	ret = 1;
 	str = ft_calloc(0, 0);
+	if (!buf)
+		buf = ft_calloc(BUFFER_SIZE + 1, sizeof(char));
 	if (buf != NULL && buf[0] != 0)
 		ret = ft_strlen(buf);
 	while (ret > 0)
@@ -102,8 +97,9 @@ int		get_next_line(int fd, char **line)
 		str = ft_strjoiner(str, buf, ret);
 		if (ft_newlinecheck(str, 0) > -1)
 			return (ft_the_finisher(str, buf, line, ret));
-		free(buf);
-		buf = ft_calloc(BUFFER_SIZE + 1, sizeof(char));
+//		free(buf);
+		ft_bzero(buf, BUFFER_SIZE + 1);
+//		buf = ft_calloc(BUFFER_SIZE + 1, sizeof(char));
 		ret = read(fd, buf, BUFFER_SIZE);
 		if (ret == -1)
 			return (ret);

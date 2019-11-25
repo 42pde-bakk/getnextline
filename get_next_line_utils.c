@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   utensils.c                                         :+:    :+:            */
+/*   get_next_line_utils.c                              :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: pde-bakk <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2019/11/18 13:52:42 by pde-bakk      #+#    #+#                 */
-/*   Updated: 2019/11/24 17:45:30 by pde-bakk      ########   odam.nl         */
+/*   Created: 2019/11/18 13:52:42 by pde-bakk       #+#    #+#                */
+/*   Updated: 2019/11/25 14:10:42 by pde-bakk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,4 +99,16 @@ char	*ft_strjoiner(char *str, char *buf, int ret)
 		n++;
 	}
 	return (join);
+}
+
+void	ft_bzero(char *s, int n)
+{
+	int	i;
+
+	i = 0;
+	while (i < n)
+	{
+		s[i] = 0;
+		i++;
+	}
 }
