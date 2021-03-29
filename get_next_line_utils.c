@@ -5,8 +5,8 @@
 /*                                                     +:+                    */
 /*   By: pde-bakk <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2019/11/18 13:52:42 by pde-bakk       #+#    #+#                */
-/*   Updated: 2019/11/25 14:10:42 by pde-bakk      ########   odam.nl         */
+/*   Created: 2019/11/18 13:52:42 by pde-bakk      #+#    #+#                 */
+/*   Updated: 2021/03/29 11:22:53 by pde-bakk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ char	*ft_strdup(const char *s1, int n, int startpos)
 		len = ft_strlen(s1);
 	else
 		len = n;
-	dup = (char*)ft_calloc(len + 1, sizeof(char));
+	dup = (char *)ft_calloc(len + 1, sizeof(char));
 	if (dup == NULL)
 		return (NULL);
 	while (i < len)
@@ -60,7 +60,7 @@ char	*ft_strdup(const char *s1, int n, int startpos)
 
 size_t	ft_strlen(const char *s)
 {
-	size_t i;
+	size_t	i;
 
 	i = 0;
 	if (!s)
@@ -80,7 +80,7 @@ char	*ft_strjoiner(char *str, char *buf, int ret)
 
 	i = 0;
 	n = 0;
-	join = (char*)ft_calloc(ft_strlen(str) + ret + 1, sizeof(char));
+	join = (char *)ft_calloc(ft_strlen(str) + ret + 1, sizeof(char));
 	if (join == NULL)
 	{
 		free(str);
