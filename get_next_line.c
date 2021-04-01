@@ -12,7 +12,7 @@
 
 #include "get_next_line.h"
 
-int	ft_newlinecheck(char *str, int k)
+int	gnl_newlinecheck(char *str, int k)
 {
 	int	i;
 
@@ -35,13 +35,13 @@ int	ft_newlinecheck(char *str, int k)
 	return (-1);
 }
 
-char	*ft_bufferfixer(char *buf)
+char	*gnl_bufferfixer(char *buf)
 {
 	int	i;
 	int	len;
 
 	i = 0;
-	len = ft_newlinecheck(buf, 0) + 1;
+	len = gnl_newlinecheck(buf, 0) + 1;
 	while (buf[i] && buf[len + i])
 	{
 		buf[i] = buf[len + i];
@@ -55,7 +55,7 @@ char	*ft_bufferfixer(char *buf)
 	return (buf);
 }
 
-int	ft_the_finisher(char *str, char *buf, char **line, int ret)
+int	gnl_the_finisher(char *str, char *buf, char **line, int ret)
 {
 	int		i;
 
@@ -66,7 +66,7 @@ int	ft_the_finisher(char *str, char *buf, char **line, int ret)
 			break ;
 		i++;
 	}
-	*line = ft_strdup(str, i, 0);
+	*line = gnl_strdup(str, i, 0);
 	if (str)
 		free(str);
 	if (ret == 0 && buf)
@@ -77,7 +77,7 @@ int	ft_the_finisher(char *str, char *buf, char **line, int ret)
 	}
 	else
 	{
-		ft_bufferfixer(buf);
+		gnl_bufferfixer(buf);
 		return (1);
 	}
 }
@@ -89,22 +89,22 @@ int	get_next_line(int fd, char **line)
 	int			ret;
 
 	ret = 1;
-	str = ft_calloc(0, 0);
+	str = gnl_calloc(0, 0);
 	if (!buf)
-		buf = ft_calloc(BUFFER_SIZE + 1, sizeof(char));
+		buf = gnl_calloc(BUFFER_SIZE + 1, sizeof(char));
 	if (buf != NULL && buf[0] != 0)
-		ret = ft_strlen(buf);
+		ret = gnl_strlen(buf);
 	while (ret > 0)
 	{
-		str = ft_strjoiner(str, buf, ret);
-		if (ft_newlinecheck(str, 0) > -1)
-			return (ft_the_finisher(str, buf, line, ret));
-		ft_bzero(buf, BUFFER_SIZE + 1);
+		str = gnl_strjoiner(str, buf, ret);
+		if (gnl_newlinecheck(str, 0) > -1)
+			return (gnl_the_finisher(str, buf, line, ret));
+		gnl_bzero(buf, BUFFER_SIZE + 1);
 		ret = read(fd, buf, BUFFER_SIZE);
 		if (ret == -1)
 			return (ret);
 	}
 	if (ret == 0)
-		return (ft_the_finisher(str, buf, line, ret));
+		return (gnl_the_finisher(str, buf, line, ret));
 	return (0);
 }

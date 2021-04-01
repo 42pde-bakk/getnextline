@@ -12,7 +12,7 @@
 
 #include "get_next_line.h"
 
-void	*ft_calloc(size_t count, size_t size)
+void	*gnl_calloc(size_t count, size_t size)
 {
 	unsigned char	*ptr;
 	size_t			i;
@@ -34,7 +34,7 @@ void	*ft_calloc(size_t count, size_t size)
 	return (ptr);
 }
 
-char	*ft_strdup(const char *s1, int n, int startpos)
+char	*gnl_strdup(const char *s1, int n, int startpos)
 {
 	char	*dup;
 	int		i;
@@ -42,12 +42,12 @@ char	*ft_strdup(const char *s1, int n, int startpos)
 
 	i = 0;
 	if (n == 0)
-		return (ft_calloc(0, 0));
+		return (gnl_calloc(0, 0));
 	if (n == -1)
-		len = ft_strlen(s1);
+		len = gnl_strlen(s1);
 	else
 		len = n;
-	dup = (char *)ft_calloc(len + 1, sizeof(char));
+	dup = (char *)gnl_calloc(len + 1, sizeof(char));
 	if (dup == NULL)
 		return (NULL);
 	while (i < len)
@@ -58,7 +58,7 @@ char	*ft_strdup(const char *s1, int n, int startpos)
 	return (dup);
 }
 
-size_t	ft_strlen(const char *s)
+size_t	gnl_strlen(const char *s)
 {
 	size_t	i;
 
@@ -72,7 +72,7 @@ size_t	ft_strlen(const char *s)
 	return (i);
 }
 
-char	*ft_strjoiner(char *str, char *buf, int ret)
+char	*gnl_strjoiner(char *str, char *buf, int ret)
 {
 	int		i;
 	int		n;
@@ -80,7 +80,7 @@ char	*ft_strjoiner(char *str, char *buf, int ret)
 
 	i = 0;
 	n = 0;
-	join = (char *)ft_calloc(ft_strlen(str) + ret + 1, sizeof(char));
+	join = (char *)gnl_calloc(gnl_strlen(str) + ret + 1, sizeof(char));
 	if (join == NULL)
 	{
 		free(str);
@@ -101,7 +101,7 @@ char	*ft_strjoiner(char *str, char *buf, int ret)
 	return (join);
 }
 
-void	ft_bzero(char *s, int n)
+void	gnl_bzero(char *s, int n)
 {
 	int	i;
 

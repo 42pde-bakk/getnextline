@@ -12,11 +12,6 @@
 
 NAME = getnextline.a
 
-ifeq ($(shell uname), Linux)
- CC = gcc
-else
- CC = clang
-endif
 FLAGS = -Wall -Wextra -Werror -ansi -O3 -pedantic -std=c99
 
 FILES = get_next_line.c get_next_line_utils.c
