@@ -6,11 +6,12 @@
 /*   By: pde-bakk <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/11/22 15:02:02 by pde-bakk      #+#    #+#                 */
-/*   Updated: 2021/03/29 11:22:10 by pde-bakk      ########   odam.nl         */
+/*   Updated: 2021/04/05 15:25:14 by pde-bakk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "gnl_internal.h"
+#include <unistd.h>
 
 int	gnl_newlinecheck(char *str, int k)
 {

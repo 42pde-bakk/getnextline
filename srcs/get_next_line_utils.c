@@ -6,11 +6,25 @@
 /*   By: pde-bakk <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/11/18 13:52:42 by pde-bakk      #+#    #+#                 */
-/*   Updated: 2021/03/29 11:22:53 by pde-bakk      ########   odam.nl         */
+/*   Updated: 2021/04/05 15:26:01 by pde-bakk      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include <stdlib.h>
+
+size_t	gnl_strlen(const char *s)
+{
+	size_t	i;
+
+	i = 0;
+	if (!s)
+		return (0);
+	if (s[0] == 0)
+		return (0);
+	while (s[i])
+		i++;
+	return (i);
+}
 
 void	*gnl_calloc(size_t count, size_t size)
 {
@@ -56,20 +70,6 @@ char	*gnl_strdup(const char *s1, int n, int startpos)
 		i++;
 	}
 	return (dup);
-}
-
-size_t	gnl_strlen(const char *s)
-{
-	size_t	i;
-
-	i = 0;
-	if (!s)
-		return (0);
-	if (s[0] == 0)
-		return (0);
-	while (s[i])
-		i++;
-	return (i);
 }
 
 char	*gnl_strjoiner(char *str, char *buf, int ret)
