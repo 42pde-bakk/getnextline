@@ -6,7 +6,7 @@
 #    By: peerdb <peerdb@student.codam.nl>             +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/09/24 12:54:54 by peerdb        #+#    #+#                  #
-#    Updated: 2021/04/05 15:27:51 by pde-bakk      ########   odam.nl          #
+#    Updated: 2021/04/05 15:37:53 by pde-bakk      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,11 +34,11 @@ RESET = \x1b[0m
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	ar -rc $(NAME) $(OBJS)
+	@ar -rc $(NAME) $(OBJS)
 	@printf "$(GREEN)Done creating getnextline.a$(RESET)\n"
 
 %.o: %.c
-	$(CC) -c $^ -o $@ $(FLAGS) -I include_internal
+	@$(CC) -c $^ -o $@ $(FLAGS) -I include_internal
 
 clean:
 	@/bin/rm -f $(OBJS)
